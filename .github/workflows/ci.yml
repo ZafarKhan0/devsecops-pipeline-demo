@@ -1,0 +1,31 @@
+name: .NET Build and Restore
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # Make sure your project uses this version
+
+    - name: Restore dependencies
+      run: dotnet restore ./HelloDevSecOps.csproj
+
+    - name: Build project
+      run: dotnet build ./HelloDevSecOps.csproj --no-restore
+
+    - name: Test project (optional)
+      run: echo "No tests yet, skipping..."
